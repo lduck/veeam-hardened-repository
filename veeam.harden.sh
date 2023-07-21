@@ -95,7 +95,7 @@ run_cmd "systemctl enable --now apparmor.service"
 
 # additional services required to be installed but not mentioned
 run_cmd "apt-get install -y libpam-pwquality"
-run_cmd "apt-get install -y chrony"
+#run_cmd "apt-get install -y chrony"
 
 # unlocking updates from 'focal-upgrades'
 replace_file "^.*\"\${distro_id}:\${distro_codename}-updates\".*$" "\"\${distro_id}:\${distro_codename}-updates\";" /etc/apt/apt.conf.d/50unattended-upgrades
@@ -403,12 +403,12 @@ update_file "^.*ENCRYPT_METHOD.*$" "ENCRYPT_METHOD SHA512" /etc/login.defs
 
 print_job "V-238328: operating system must be configured to prohibit or restrict the use of functions, ports, protocols, and/or services, as defined in the PPSM CAL and vulnerability assessments"
 #deny incoming, allow outgoing
-run_cmd "ufw default deny incoming"
-run_cmd "ufw default allow outgoing"
+#run_cmd "ufw default deny incoming"
+#run_cmd "ufw default allow outgoing"
 #allow ssh
-run_cmd "ufw allow ssh"
+#run_cmd "ufw allow ssh"
 #ufw enable
-run_cmd "ufw --force enable"
+#run_cmd "ufw --force enable"
 
 print_job "V-238329: operating system must prevent direct login into the root account"
 run_cmd "passwd -l root"
@@ -475,10 +475,10 @@ run_cmd "systemctl enable --now ufw.service"
 #run_cmd "systemctl start ufw.service" -- no need as we enable and start already
 
 print_job "V-238356: operating system must, for networked systems, compare internal information system clocks at least every 24 hours with a server"
-echo "server tick.usno.navy.mil iburst maxpoll 16" > /etc/chrony/chrony.conf
-echo "server tock.usno.navy.mil iburst maxpoll 16" >> /etc/chrony/chrony.conf
-echo "server ntp2.usno.navy.mil iburst maxpoll 16" >> /etc/chrony/chrony.conf
-update_file "^.*DAEMON_OPTS.*$" "DAEMON_OPTS=\"-R -F -1\"" /etc/default/chrony
+#echo "server tick.usno.navy.mil iburst maxpoll 16" > /etc/chrony/chrony.conf
+#echo "server tock.usno.navy.mil iburst maxpoll 16" >> /etc/chrony/chrony.conf
+#echo "server ntp2.usno.navy.mil iburst maxpoll 16" >> /etc/chrony/chrony.conf
+#update_file "^.*DAEMON_OPTS.*$" "DAEMON_OPTS=\"-R -F -1\"" /etc/default/chrony
 #run_cmd "systemctl enable --now chrony.service"
 
 #print_job "V-238357: operating system must synchronize internal information system clocks to the authoritative time source"
@@ -536,7 +536,7 @@ run_cmd "systemctl restart auditd.service"
 run_cmd "systemctl restart ufw.service"
 
 # chrony
-run_cmd "systemctl restart chrony.service"
+#run_cmd "systemctl restart chrony.service"
 
 # load audit rules
 augenrules --load
